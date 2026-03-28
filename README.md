@@ -1,43 +1,218 @@
-# mcq_generator_pro
+<div align="center">
 
-AI MCQ generator app with FastAPI and React. Upload PDF/text, generate questions, preview results, and export Word documents with answers, without answers, and answer key.
+<img src="https://img.shields.io/badge/MCQ_Generator_Pro-v1.0.0-6366f1?style=for-the-badge&logo=lightning&logoColor=white" alt="version" />
 
-## Project Structure
+# ⚡ MCQ Generator Pro
 
-- `backend/`: FastAPI backend
-- `frontend/`: React frontend
+**Transform any PDF or text into a polished question bank — in seconds.**
 
-## Setup Instructions
+Upload → Generate → Preview → Export. Powered by Gemini AI, built with FastAPI & React.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Vellorpavan/mcq_generator_pro.git
-   cd mcq_generator_pro
-   ```
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-18+-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Google Gemini](https://img.shields.io/badge/Gemini_AI-Powered-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev)
+[![License](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](LICENSE)
 
-2. **Set up Environment Variables:**
-   - Copy `.env.example` to `.env`:
-     ```bash
-     cp .env.example .env
-     ```
-   - Open `.env` and replace `your_api_key_here` with your actual Gemini API key.
+[Demo](#demo) · [Features](#features) · [Quick Start](#quick-start) · [API Docs](#api-reference) · [Contributing](#contributing)
 
-3. **Backend Setup:**
-   ```bash
-   cd backend
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   pip install -r requirements.txt
-   uvicorn app.main:app --reload
-   ```
+---
 
-4. **Frontend Setup:**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
+</div>
 
-## Security
+## 🎯 What Is This?
 
-**IMPORTANT:** Never commit your `.env` file to GitHub. The `.gitignore` file is configured to exclude it.
+**MCQ Generator Pro** is a full-stack AI application that eliminates the tedious work of writing multiple-choice questions. Upload a PDF or paste text, configure your settings, and get a complete, export-ready question bank in moments.
+
+Built for educators, trainers, content creators, and anyone who needs questions — fast.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 📄 **PDF & Text Upload** | Drag-and-drop PDF or raw text input |
+| 🤖 **AI Generation** | Powered by Google Gemini for accurate, context-aware MCQs |
+| 👁️ **Live Preview** | Review all questions before exporting |
+| 📝 **3-Format Export** | Word doc with answers, without answers, and answer key only |
+| ⚡ **Fast API Backend** | Async FastAPI with auto-generated Swagger docs |
+| 🎨 **Clean React UI** | Responsive, intuitive frontend |
+
+---
+
+## 🗂️ Project Structure
+
+```
+mcq_generator_pro/
+├── backend/                  # FastAPI application
+│   ├── app/
+│   │   ├── main.py           # Entry point & route registration
+│   │   ├── routers/          # API route handlers
+│   │   ├── services/         # Gemini AI integration & MCQ logic
+│   │   └── models/           # Pydantic schemas
+│   ├── requirements.txt
+│   └── .env.example          # Environment variable template
+│
+├── frontend/                 # React application
+│   ├── src/
+│   │   ├── components/       # UI components
+│   │   ├── pages/            # Route-level pages
+│   │   └── services/         # API client
+│   ├── package.json
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python **3.9+**
+- Node.js **18+**
+- A **Google Gemini API key** — get one free at [aistudio.google.com](https://aistudio.google.com)
+
+---
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Vellorpavan/mcq_generator_pro.git
+cd mcq_generator_pro
+```
+
+---
+
+### 2. Configure Environment Variables
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and fill in your values:
+
+```env
+# .env
+GEMINI_API_KEY=your_actual_api_key_here   # Required — never share this
+```
+
+> 🔒 **Security note:** `.env` is listed in `.gitignore` and will never be committed. See the [Security](#security) section for best practices.
+
+---
+
+### 3. Backend Setup
+
+```bash
+cd backend
+
+# Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate          # macOS / Linux
+# venv\Scripts\activate           # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the development server
+uvicorn app.main:app --reload
+```
+
+The API will be live at **http://localhost:8000**  
+Interactive docs available at **http://localhost:8000/docs**
+
+---
+
+### 4. Frontend Setup
+
+Open a new terminal tab:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The app will be live at **http://localhost:5173**
+
+---
+
+## 🔐 Security
+
+Keeping your API key safe is critical. Follow these practices:
+
+**✅ Do**
+- Store secrets in `.env` only — it's already in `.gitignore`
+- Rotate your Gemini API key if you suspect it was exposed
+- Use environment variables in production (e.g., Railway, Render, Vercel env settings)
+- Restrict your API key in [Google AI Studio](https://aistudio.google.com) to specific IPs or referrers where possible
+
+**❌ Never**
+- Commit `.env` to version control
+- Hardcode your API key in source files
+- Share your key in GitHub Issues, Discord, or screenshots
+
+> **If you accidentally pushed your key:** Remove the commit, invalidate the key immediately in Google AI Studio, and generate a new one.
+
+---
+
+## 📡 API Reference
+
+The backend exposes a RESTful API. Full interactive documentation is auto-generated by FastAPI.
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/upload` | Upload a PDF or text content |
+| `POST` | `/api/generate` | Generate MCQs from uploaded content |
+| `GET` | `/api/preview` | Fetch generated questions for preview |
+| `POST` | `/api/export` | Export questions as Word documents |
+
+**Run locally:** [http://localhost:8000/docs](http://localhost:8000/docs)
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend**
+- [FastAPI](https://fastapi.tiangolo.com) — High-performance Python API framework
+- [Google Generative AI SDK](https://ai.google.dev) — Gemini model integration
+- [python-docx](https://python-docx.readthedocs.io) — Word document generation
+- [PyMuPDF / pdfplumber](https://pymupdf.readthedocs.io) — PDF text extraction
+- [Uvicorn](https://www.uvicorn.org) — ASGI server
+
+**Frontend**
+- [React 18](https://react.dev) — UI framework
+- [Vite](https://vitejs.dev) — Build tool & dev server
+- [Axios](https://axios-http.com) — HTTP client
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how to get involved:
+
+1. **Fork** this repository
+2. **Create** a feature branch: `git checkout -b feat/your-feature-name`
+3. **Commit** your changes: `git commit -m "feat: add your feature"`
+4. **Push** to your branch: `git push origin feat/your-feature-name`
+5. **Open** a Pull Request
+
+Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+Made with ❤️ by [Vellorpavan](https://github.com/Vellorpavan)
+
+⭐ Star this repo if it saved you time!
+
+</div>
